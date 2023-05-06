@@ -1,4 +1,6 @@
 from django import template
+from django.db.models import Count
+
 from women.models import *
 
 register = template.Library()
@@ -14,7 +16,7 @@ def get_categories(filtr=None):
 @register.inclusion_tag('women/list_categories.html')
 def show_categories(sort=None, cat_selected=None):
     if not sort:
-        cats = Category.objects.all()
+        cats = Category.objects.annotate(total=Count('women'))
     else:
-        cats = Category.objects.order_by(sort)
+        cats = Category.objects.annotate(total=Count('women')).order_by(sort)
     return {'cats': cats, 'cat_selected': cat_selected}
