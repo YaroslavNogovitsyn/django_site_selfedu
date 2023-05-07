@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 {% load women_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -44,13 +45,15 @@
                     <!-- Sidebar слева -->
                     <td valign="top" class="left-chapters">
                         <ul id="leftchapters">
-                            {% if not cat_selected %}
-                                <li class="selected">Все категории</li>
-                            {% else %}
-                                <li><a href="{% url 'home' %}">Все категории</a></li>
-                            {% endif %}
+                            {% cache 60 sidebar %}
+                                {% if not cat_selected %}
+                                    <li class="selected">Все категории</li>
+                                {% else %}
+                                    <li><a href="{% url 'home' %}">Все категории</a></li>
+                                {% endif %}
 
-                            {% show_categories 'name' cat_selected %}
+                                {% show_categories 'name' cat_selected %}
+                            {% endcache %}
                             <li class="share">
                                 <p>Связь со мной</p>
                                 <a class="share-yt"
