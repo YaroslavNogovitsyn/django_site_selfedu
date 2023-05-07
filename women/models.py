@@ -6,7 +6,7 @@ class Women(models.Model):
     class Meta:
         verbose_name = 'Известные женщины'  # Наименование в админке
         verbose_name_plural = 'Известные женщины'  # чтобы django не добавлял "s" на конце
-        ordering = ['-time_create', 'title']
+        ordering = ['id']
 
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
